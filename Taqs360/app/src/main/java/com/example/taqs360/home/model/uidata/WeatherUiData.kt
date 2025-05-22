@@ -17,6 +17,7 @@ data class WeatherUiData(
     val timezoneOffset: Int
 )
 
+
 data class ForecastUiModel(
     val day: String,
     val minTemp: Int,
