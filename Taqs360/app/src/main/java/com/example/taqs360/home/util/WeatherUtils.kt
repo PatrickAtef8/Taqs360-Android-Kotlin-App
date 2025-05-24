@@ -8,19 +8,19 @@ object WeatherUtils {
 
     fun getWeatherIconResIdFromCode(iconCode: String): Int {
         return when (iconCode) {
-            "01d" -> R.drawable.sunny // Clear sky (day)
-            "01n" -> R.drawable.clearnight // Clear sky (night)
-            "02d" -> R.drawable.cloudy // Few clouds (day)
-            "02n" -> R.drawable.dark // Few clouds (night)
-            "03d", "03n" -> R.drawable.scatteredclouds // Scattered clouds
-            "04d", "04n" -> R.drawable.scatteredclouds // Broken clouds
-            "09d", "09n" -> R.drawable.rainy // Shower rain
-            "10d" -> R.drawable.rainyday // Rain (day)
-            "10n" -> R.drawable.rainynight // Rain (night)
-            "11d", "11n" -> R.drawable.thunderstorm // Thunderstorm
-            "13d", "13n" -> R.drawable.snowy // Snow
-            "50d", "50n" -> R.drawable.misty // Mist
-            else -> R.drawable.cloudy // Default
+            "01d" -> R.drawable.sunny
+            "01n" -> R.drawable.clearnight
+            "02d" -> R.drawable.cloudy
+            "02n" -> R.drawable.dark
+            "03d", "03n" -> R.drawable.scatteredclouds
+            "04d", "04n" -> R.drawable.scatteredclouds
+            "09d", "09n" -> R.drawable.rainy
+            "10d" -> R.drawable.rainyday
+            "10n" -> R.drawable.rainynight
+            "11d", "11n" -> R.drawable.thunderstorm
+            "13d", "13n" -> R.drawable.snowy
+            "50d", "50n" -> R.drawable.misty
+            else -> R.drawable.cloudy
         }
     }
 
@@ -38,9 +38,28 @@ object WeatherUtils {
         return formatter.format(Date(timestamp * 1000))
     }
 
-    fun formatTemperature(temp: Float): String = "${temp.toInt()}°"
+    fun formatTemperature(temp: Float, unitSymbol: String): String {
+        return "${temp.toInt()}$unitSymbol"
+    }
 
-    fun formatVisibility(visibility: Int): String = "${visibility / 1000.0} km"
+    fun formatVisibility(visibility: Int): String {
+        return "${visibility / 1000.0} km"
+    }
 
-    fun formatWindSpeed(speed: Float): String = "$speed km/h"
+    fun formatWindSpeed(speed: Float, windUnit: String): String {
+        return when (windUnit) {
+            "meters_sec" -> "$speed m/s"
+            "miles_hour" -> "${(speed * 2.23694).toFloat().let { "%.1f".format(it) }} mph"
+            else -> "$speed m/s"
+        }
+    }
+
+    fun toArabicNumerals(input: String, isArabic: Boolean): String {
+        if (!isArabic) return input
+        val arabicNumerals = mapOf(
+            '0' to '٠', '1' to '١', '2' to '٢', '3' to '٣', '4' to '٤',
+            '5' to '٥', '6' to '٦', '7' to '٧', '8' to '٨', '9' to '٩'
+        )
+        return input.map { arabicNumerals[it] ?: it }.joinToString("")
+    }
 }
