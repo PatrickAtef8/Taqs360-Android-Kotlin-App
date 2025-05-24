@@ -11,9 +11,13 @@ import com.example.taqs360.home.model.pojo.Forecast
 import com.example.taqs360.home.util.WeatherUtils
 import java.util.TimeZone
 
-class ThreeHoursForecastAdapter : RecyclerView.Adapter<ThreeHoursForecastAdapter.ViewHolder>() {
+class ThreeHoursForecastAdapter(
+    private var tempUnit: String,
+    private var isArabic: Boolean = false
+) : RecyclerView.Adapter<ThreeHoursForecastAdapter.ViewHolder>() {
+
     private var hourlyForecasts: List<Forecast> = emptyList()
-    private var timezoneOffset: Int = 0 // Add timezone offset
+    private var timeZone: TimeZone = TimeZone.getDefault()
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvTime: TextView = view.findViewById(R.id.tv_time)
@@ -22,25 +26,43 @@ class ThreeHoursForecastAdapter : RecyclerView.Adapter<ThreeHoursForecastAdapter
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_threehours_forecast, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_threehours_forecast, parent, false)
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val forecast = hourlyForecasts[position]
-        val timeZone = TimeZone.getTimeZone("UTC").apply {
-            rawOffset = timezoneOffset * 1000 // Set timezone offset
+        val unitSymbol = when(tempUnit) {
+            "metric" -> "°C"
+            "imperial" -> "°F"
+            "standard" -> "K"
+            else -> "°C"
         }
+
         holder.tvTime.text = WeatherUtils.formatTime(forecast.dt, timeZone)
-        holder.tvTemp.text = WeatherUtils.formatTemperature(forecast.main.temp)
-        holder.ivWeatherIcon.setImageResource(WeatherUtils.getWeatherIconResIdFromCode(forecast.weather[0].icon))
+
+        val tempFormatted = WeatherUtils.formatTemperature(forecast.main.temp.toFloat(), unitSymbol)
+            .let { if (isArabic) WeatherUtils.toArabicNumerals(it, true) else it }
+        holder.tvTemp.text = tempFormatted
+
+        val iconCode = forecast.weather.firstOrNull()?.icon ?: ""
+        holder.ivWeatherIcon.setImageResource(
+            WeatherUtils.getWeatherIconResIdFromCode(iconCode)
+        )
     }
 
     override fun getItemCount(): Int = hourlyForecasts.size
 
-    fun submitList(newList: List<Forecast>, timezoneOffset: Int) {
-        this.timezoneOffset = timezoneOffset
-        hourlyForecasts = newList
+    fun submitList(newList: List<Forecast>, timeZoneId: String) {
+        this.timeZone = TimeZone.getTimeZone(timeZoneId)
+        hourlyForecasts = newList.sortedBy { it.dt }
+        notifyDataSetChanged()
+    }
+
+    fun updateSettings(newTempUnit: String, newIsArabic: Boolean) {
+        tempUnit = newTempUnit
+        isArabic = newIsArabic
         notifyDataSetChanged()
     }
 }
