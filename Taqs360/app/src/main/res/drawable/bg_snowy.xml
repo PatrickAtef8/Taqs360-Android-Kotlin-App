@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="300dp"
+    android:height="300dp"
+    android:viewportWidth="300"
+    android:viewportHeight="300">
+    <group>
+        <!-- Snowflake 1 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M50,50 m-8,0 a8,8 0 1,0 16,0 a8,8 0 1,0 -16,0
+                            M50,42 v16 M42,50 h16
+                            M46,46 l8,8 M46,54 l8,-8" />
+        <!-- Snowflake 2 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M150,80 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0
+                            M150,74 v12 M144,80 h12
+                            M146,76 l6,6 M146,84 l6,-6" />
+        <!-- Snowflake 3 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M220,60 m-7,0 a7,7 0 1,0 14,0 a7,7 0 1,0 -14,0
+                            M220,53 v14 M213,60 h14
+                            M216,56 l7,7 M216,64 l7,-7" />
+        <!-- Snowflake 4 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M80,120 m-5,0 a5,5 0 1,0 10,0 a5,5 0 1,0 -10,0
+                            M80,115 v10 M75,120 h10
+                            M77,117 l5,5 M77,123 l5,-5" />
+        <!-- Snowflake 5 -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M180,150 m-6,0 a6,6 0 1,0 12,0 a6,6 0 1,0 -12,0
+                            M180,144 v12 M174,150 h12
+                            M176,146 l6,6 M176,154 l6,-6" />
+    </group>
+</vector>
