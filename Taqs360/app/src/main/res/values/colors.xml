@@ -2,4 +2,37 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="sky_blue">#84B9FF</color>
+    <color name="black_87">#232F34</color>
+    <color name="black_54">#8A9BA5</color>
+    <color name="black_20">#33414A</color>
+    <color name="yellow">#FFEB3B</color>
+
+    <color name="nav_item_text_color">#212121</color>
+    <color name="nav_item_icon_color">#616161</color>
+    <color name="colorPrimary">#161E26</color> <!-- teal tone -->
+
+
+    <color name="primary">#1976D2</color>
+    <color name="primary_dark">#1565C0</color>
+    <color name="accent">#FF4081</color>
+    <color name="background">#F5F5F5</color>
+
+
+    <!-- New colors for day theme -->
+    <color name="day_start">#FF87CEEB</color> <!-- Matches sky_blue -->
+    <color name="day_end">#FFFFFFFF</color> <!-- White, matches bg_gradient -->
+
+    <!-- New colors for night theme -->
+    <color name="night_start">#FF1E3A5F</color> <!-- Dark blue, nighttime feel -->
+    <color name="night_end">#FF2E4A7A</color> <!-- Slightly lighter dark blue -->
+    <!-- Existing colors from your app -->
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+
+
+
+
 </resources>
