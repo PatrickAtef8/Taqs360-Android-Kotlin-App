@@ -6,7 +6,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_gradient">
+    android:background="@drawable/bg_gradient"
+    android:layoutDirection="locale">
 
     <!-- Main content -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,6 +18,103 @@
         android:paddingTop="16dp"
         android:paddingEnd="16dp"
         android:paddingBottom="16dp">
+
+        <!-- Sunlight Flashing Animation -->
+        <ImageView
+            android:id="@+id/sunlight_animation"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/sunlight"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Weather Animations -->
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/rainy_animation"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/rainyanim"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/cloudy_animation"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:lottie_rawRes="@raw/cloudyanim"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <ImageView
+            android:id="@+id/snowy_animation"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginTop="16dp"
+            android:src="@drawable/bg_snowy"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Stars Animation (for night) -->
+        <ImageView
+            android:id="@+id/stars_animation"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <!-- Fixed Menu Button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/iv_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="88dp"
+            android:contentDescription="Open navigation drawer"
+            android:src="@drawable/sort"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:elevation="4dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/black_54"
+            app:tint="@color/black_87" />
+
+        <!-- Map Button -->
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/iv_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="88dp"
+            android:contentDescription="Open map"
+            android:src="@drawable/ic_map"
+            android:visibility="gone"
+            app:backgroundTint="@color/white"
+            app:elevation="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:rippleColor="@color/black_54"
+            app:tint="@color/black_87" />
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -42,23 +140,12 @@
                 android:id="@+id/content_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="75dp"
+                android:paddingTop="80dp"
+                android:paddingBottom="75dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/iv_menu"
-                    android:layout_width="69dp"
-                    android:layout_height="58dp"
-                    android:src="@drawable/sort"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:contentDescription="Open navigation drawer"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:tint="@color/black_87" />
 
                 <TextView
                     android:id="@+id/tv_location"
@@ -68,7 +155,6 @@
                     android:textColor="@color/black_87"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@id/iv_menu"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -90,10 +176,9 @@
                     android:gravity="center"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/iv_menu"
+                    app:layout_constraintTop_toBottomOf="@id/tv_location"
                     tools:text="Sat, 29 June, 1:00 PM" />
 
-                <!-- Centered Weather Section -->
                 <TextView
                     android:id="@+id/tv_temp"
                     android:layout_width="wrap_content"
@@ -196,7 +281,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Humidity"
+                                android:text="@string/humidity_label"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
 
@@ -228,7 +313,7 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Wind"
+                                android:text="@string/wind_label"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
 
@@ -260,12 +345,11 @@
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="Visibility"
+                                android:text="@string/visibility_label"
                                 android:textColor="@color/white"
                                 android:textSize="12sp" />
 
                         </LinearLayout>
-
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
@@ -295,12 +379,46 @@
                     app:layout_constraintTop_toBottomOf="@id/divider"
                     app:strokeWidth="0dp">
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_forecast"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        tools:listitem="@layout/item_forecast" />
+                        android:orientation="vertical"
+                        android:padding="16dp">
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_forecast_icon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_calendar"
+                                android:contentDescription="Calendar icon"
+                                app:tint="@color/black_54" />
+
+                            <TextView
+                                android:id="@+id/tv_forecast_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/five_days_forecast"
+                                android:textColor="@color/black_54"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_forecast"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            tools:listitem="@layout/item_forecast" />
+
+                    </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
 
                 <View
@@ -336,14 +454,31 @@
                         android:orientation="vertical"
                         android:padding="16dp">
 
-                        <TextView
-                            android:id="@+id/tv_hourly_title"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Three-Hours Forecast"
-                            android:textColor="@color/black_87"
-                            android:textSize="16sp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:id="@+id/iv_hourly_icon"
+                                android:layout_width="24dp"
+                                android:layout_height="24dp"
+                                android:src="@drawable/ic_clock"
+                                android:tint="@color/black_54"
+                                android:contentDescription="Clock icon" />
+
+                            <TextView
+                                android:id="@+id/tv_hourly_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="@string/three_hours_forecast"
+                                android:textColor="@color/black_54"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
                         <androidx.recyclerview.widget.RecyclerView
                             android:id="@+id/rv_hourly_forecast"
@@ -378,6 +513,8 @@
         app:itemTextColor="@color/nav_item_text_color"
         app:menu="@menu/nav_menu"
         app:itemBackground="@drawable/nav_item_background"
-        android:fitsSystemWindows="true" />
+        android:fitsSystemWindows="true"
+        android:layoutDirection="locale"
+        tools:layout_gravity="start" />
 
 </androidx.drawerlayout.widget.DrawerLayout>
