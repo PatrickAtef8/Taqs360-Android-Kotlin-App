@@ -14,9 +14,9 @@ data class WeatherUiData(
     val currentTime: String,
     val currentWeatherIcon: Int,
     val forecasts: List<ForecastUiModel>,
-    val timezoneOffset: Int
+    val timezoneOffset: Int,
+    val timezoneId: String
 )
-
 
 data class ForecastUiModel(
     val day: String,
@@ -25,5 +25,6 @@ data class ForecastUiModel(
     val weatherDescription: String,
     val iconResId: Int,
     val forecastsForDay: List<Forecast>,
-    val isToday: Boolean
+    val isToday: Boolean,
+    val isTomorrow: Boolean
 )
