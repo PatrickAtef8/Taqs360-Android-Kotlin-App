@@ -43,14 +43,14 @@ object WeatherUtils {
     }
 
     fun formatVisibility(visibility: Int): String {
-        return "${visibility / 1000.0} km"
+        return "${(visibility / 1000.0).let { "%.1f".format(it) }} km"
     }
 
     fun formatWindSpeed(speed: Float, windUnit: String): String {
         return when (windUnit) {
-            "meters_sec" -> "$speed m/s"
-            "miles_hour" -> "${(speed * 2.23694).toFloat().let { "%.1f".format(it) }} mph"
-            else -> "$speed m/s"
+            "meters_sec" -> "%.2f m/s".format(speed)
+            "miles_hour" -> "%.2f mph".format(speed)
+            else -> "%.2f m/s".format(speed)
         }
     }
 
