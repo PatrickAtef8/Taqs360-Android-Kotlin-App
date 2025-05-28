@@ -1,4 +1,4 @@
-package com.example.taqs360.alerts.view
+package com.example.taqs360.alarm.view
 
 import android.os.Bundle
 import android.util.Log
@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
 import com.example.taqs360.R
-import com.example.taqs360.alerts.viewmodel.AlarmViewModel
+import com.example.taqs360.alarm.viewmodel.AlarmViewModel
 import com.example.taqs360.databinding.FragmentDatePickerBinding
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog
 import org.threeten.bp.LocalDate

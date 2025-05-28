@@ -1,6 +1,6 @@
-package com.example.taqs360.alerts.model.datasource
+package com.example.taqs360.alarm.model.datasource
 
-import com.example.taqs360.alerts.model.AlarmData
+import com.example.taqs360.alarm.model.AlarmData
 import com.example.taqs360.map.model.LocationData
 
 interface AlarmLocalDataSource {

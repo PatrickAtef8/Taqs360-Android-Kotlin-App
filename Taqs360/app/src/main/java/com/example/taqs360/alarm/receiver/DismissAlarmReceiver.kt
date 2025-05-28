@@ -1,4 +1,4 @@
-package com.example.taqs360.alerts.receiver
+package com.example.taqs360.alarm.receiver
 
 import android.app.NotificationManager
 import android.content.BroadcastReceiver
@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.util.Log
-import com.example.taqs360.R
 
 class DismissAlarmReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

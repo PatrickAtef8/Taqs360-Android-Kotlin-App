@@ -1,4 +1,4 @@
-package com.example.taqs360.alerts.view
+package com.example.taqs360.alarm.view
 
 import android.content.Context
 import android.content.Intent
@@ -14,8 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.taqs360.alerts.viewmodel.AlarmViewModel
-import com.example.taqs360.alerts.viewmodel.AlarmViewModelFactory
+import com.example.taqs360.alarm.viewmodel.AlarmViewModel
+import com.example.taqs360.alarm.viewmodel.AlarmViewModelFactory
 import com.example.taqs360.databinding.ActivityWeatherAlertsBinding
 import com.example.taqs360.home.view.WeatherActivity
 import com.example.taqs360.map.model.LocationData

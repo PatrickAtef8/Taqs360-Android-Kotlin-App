@@ -1,6 +1,6 @@
-package com.example.taqs360.alerts.model.repository
+package com.example.taqs360.alarm.model.repository
 
-import com.example.taqs360.alerts.model.AlarmData
+import com.example.taqs360.alarm.model.AlarmData
 import com.example.taqs360.map.model.LocationData
 
 interface AlarmRepository {

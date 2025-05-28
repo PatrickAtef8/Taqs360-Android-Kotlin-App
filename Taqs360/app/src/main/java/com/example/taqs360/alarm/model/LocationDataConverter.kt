@@ -1,4 +1,4 @@
-package com.example.taqs360.alerts.model
+package com.example.taqs360.alarm.model
 
 import androidx.room.TypeConverter
 import com.example.taqs360.map.model.LocationData

@@ -1,8 +1,8 @@
-package com.example.taqs360.alerts.model.datasource
+package com.example.taqs360.alarm.model.datasource
 
 import android.content.Context
 import android.util.Log
-import com.example.taqs360.alerts.model.AlarmData
+import com.example.taqs360.alarm.model.AlarmData
 import com.example.taqs360.map.model.LocationData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

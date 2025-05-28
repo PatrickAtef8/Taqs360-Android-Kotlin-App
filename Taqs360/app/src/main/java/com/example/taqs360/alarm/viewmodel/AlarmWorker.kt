@@ -1,4 +1,4 @@
-package com.example.taqs360.alerts.work
+package com.example.taqs360.alarm.work
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -14,7 +14,7 @@ import androidx.core.app.NotificationCompat
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.taqs360.R
-import com.example.taqs360.alerts.receiver.DismissAlarmReceiver
+import com.example.taqs360.alarm.receiver.DismissAlarmReceiver
 import com.example.taqs360.home.view.WeatherActivity
 
 class AlarmWorker(

@@ -1,10 +1,10 @@
-package com.example.taqs360.alerts.viewmodel
+package com.example.taqs360.alarm.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.taqs360.alerts.model.datasource.AlarmLocalDataSourceImpl
-import com.example.taqs360.alerts.model.repository.AlarmRepositoryImpl
+import com.example.taqs360.alarm.model.datasource.AlarmLocalDataSourceImpl
+import com.example.taqs360.alarm.model.repository.AlarmRepositoryImpl
 
 class AlarmViewModelFactory(private val context: Context) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

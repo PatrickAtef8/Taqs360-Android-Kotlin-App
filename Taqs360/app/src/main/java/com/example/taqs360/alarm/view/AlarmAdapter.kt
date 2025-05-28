@@ -1,4 +1,4 @@
-package com.example.taqs360.alerts.view
+package com.example.taqs360.alarm.view
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.taqs360.databinding.ItemAlarmBinding
-import com.example.taqs360.alerts.model.AlarmData
+import com.example.taqs360.alarm.model.AlarmData
 
 class AlarmAdapter(
     private val onAlarmClick: (AlarmData) -> Unit,

@@ -1,12 +1,12 @@
-package com.example.taqs360.alerts.model.datasource
+package com.example.taqs360.alarm.model.datasource
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.taqs360.alerts.model.AlarmData
-import com.example.taqs360.alerts.model.LocationDataConverter
+import com.example.taqs360.alarm.model.AlarmData
+import com.example.taqs360.alarm.model.LocationDataConverter
 
 @Database(entities = [AlarmData::class], version = 1, exportSchema = false)
 @TypeConverters(LocationDataConverter::class)

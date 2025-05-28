@@ -1,4 +1,4 @@
-package com.example.taqs360.alerts.viewmodel
+package com.example.taqs360.alarm.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -9,16 +9,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import com.example.taqs360.alerts.model.AlarmData
-import com.example.taqs360.alerts.model.repository.AlarmRepository
-import com.example.taqs360.alerts.work.AlarmWorker
+import com.example.taqs360.alarm.model.AlarmData
+import com.example.taqs360.alarm.model.repository.AlarmRepository
+import com.example.taqs360.alarm.work.AlarmWorker
 import com.example.taqs360.home.model.local.WeatherDatabase
 import com.example.taqs360.home.model.local.WeatherLocalDataSourceImpl
 import com.example.taqs360.home.model.remote.RetrofitHelper
 import com.example.taqs360.home.model.remote.WeatherRemoteDataSourceImpl
 import com.example.taqs360.home.model.remote.WeatherService
 import com.example.taqs360.home.model.repository.WeatherRepositoryImpl
-import com.example.taqs360.home.model.uidata.WeatherUiData
 import com.example.taqs360.home.viewmodel.WeatherViewModel
 import com.example.taqs360.location.LocationDataSource
 import com.example.taqs360.map.model.LocationData

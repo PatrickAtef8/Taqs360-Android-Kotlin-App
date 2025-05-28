@@ -1,10 +1,10 @@
-package com.example.taqs360.alerts.model.datasource
+package com.example.taqs360.alarm.model.datasource
 
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.taqs360.alerts.model.AlarmData
+import com.example.taqs360.alarm.model.AlarmData
 
 @Dao
 interface AlarmDao {
