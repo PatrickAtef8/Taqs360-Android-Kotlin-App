@@ -1,6 +1,6 @@
-package com.example.taqs360.settings
+package com.example.taqs360.settings.view
 
-import android.content.res.Configuration
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,12 +17,15 @@ import com.example.taqs360.map.view.MapFragment
 import com.example.taqs360.settings.model.local.SettingsLocalDataSourceImpl
 import com.example.taqs360.settings.model.remote.SettingsRemoteDataSourceImpl
 import com.example.taqs360.settings.model.repository.SettingsRepositoryImpl
-import java.util.*
+import com.example.taqs360.settings.viewmodel.SettingsViewModel
+import com.example.taqs360.settings.viewmodel.SettingsViewModelFactory
 
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private lateinit var viewModel: SettingsViewModel
+    private var lastUserSelectedLocationMode: String? = null
+    private var isInitialSpinnerSetup = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,6 +65,7 @@ class SettingsFragment : Fragment() {
         )
 
         val languages = listOf(
+            getString(R.string.system_default) to "system",
             getString(R.string.english) to "en",
             getString(R.string.arabic) to "ar"
         )
@@ -132,12 +136,34 @@ class SettingsFragment : Fragment() {
         ).apply {
             setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         }
-
+        binding.spinnerLocationMode.adapter = locationAdapter
+        binding.spinnerLocationMode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                if (!isInitialSpinnerSetup && binding.spinnerLocationMode.tag != "programmatic") {
+                    val selectedMode = locationModes[position].second
+                    Log.d("SettingsFragment", "User selected location mode: $selectedMode")
+                    viewModel.saveLocationMode(selectedMode)
+                    Log.d("SettingsFragment", "Saved location mode: $selectedMode")
+                    if (selectedMode == "map" && lastUserSelectedLocationMode != "map") {
+                        lastUserSelectedLocationMode = selectedMode
+                        openMapFragment()
+                    } else {
+                        lastUserSelectedLocationMode = selectedMode
+                    }
+                }
+            }
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
     }
 
     private fun observeSettings() {
         viewModel.settings.observe(viewLifecycleOwner) { settings ->
             Log.d("SettingsFragment", "Updating spinners with settings: $settings")
+            if (lastUserSelectedLocationMode == null) {
+                lastUserSelectedLocationMode = settings.locationMode
+                Log.d("SettingsFragment", "Initialized lastUserSelectedLocationMode: $lastUserSelectedLocationMode")
+            }
+
             val tempUnits = listOf(
                 getString(R.string.celsius) to "metric",
                 getString(R.string.fahrenheit) to "imperial",
@@ -148,6 +174,7 @@ class SettingsFragment : Fragment() {
                 getString(R.string.miles_hour) to "miles_hour"
             )
             val languages = listOf(
+                getString(R.string.system_default) to "system",
                 getString(R.string.english) to "en",
                 getString(R.string.arabic) to "ar"
             )
@@ -159,10 +186,12 @@ class SettingsFragment : Fragment() {
             binding.spinnerTempUnits.tag = "programmatic"
             binding.spinnerWindUnits.tag = "programmatic"
             binding.spinnerLanguage.tag = "programmatic"
+            binding.spinnerLocationMode.tag = "programmatic"
 
             binding.spinnerTempUnits.onItemSelectedListener = null
             binding.spinnerWindUnits.onItemSelectedListener = null
             binding.spinnerLanguage.onItemSelectedListener = null
+            binding.spinnerLocationMode.onItemSelectedListener = null
 
             binding.spinnerTempUnits.setSelection(
                 tempUnits.indexOfFirst { it.second == settings.temperatureUnit }.coerceAtLeast(0),
@@ -176,7 +205,10 @@ class SettingsFragment : Fragment() {
                 languages.indexOfFirst { it.second == settings.language }.coerceAtLeast(0),
                 false
             )
-
+            binding.spinnerLocationMode.setSelection(
+                locationModes.indexOfFirst { it.second == settings.locationMode }.coerceAtLeast(0),
+                false
+            )
 
             binding.spinnerTempUnits.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
@@ -205,35 +237,47 @@ class SettingsFragment : Fragment() {
                 }
                 override fun onNothingSelected(parent: AdapterView<*>) {}
             }
-
+            binding.spinnerLocationMode.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                    if (!isInitialSpinnerSetup && binding.spinnerLocationMode.tag != "programmatic") {
+                        val selectedMode = locationModes[position].second
+                        Log.d("SettingsFragment", "User selected location mode: $selectedMode")
+                        viewModel.saveLocationMode(selectedMode)
+                        Log.d("SettingsFragment", "Saved location mode: $selectedMode")
+                        if (selectedMode == "map" && lastUserSelectedLocationMode != "map") {
+                            lastUserSelectedLocationMode = selectedMode
+                            openMapFragment()
+                        } else {
+                            lastUserSelectedLocationMode = selectedMode
+                        }
+                    }
+                }
+                override fun onNothingSelected(parent: AdapterView<*>) {}
+            }
 
             binding.spinnerTempUnits.tag = null
             binding.spinnerWindUnits.tag = null
             binding.spinnerLanguage.tag = null
+            binding.spinnerLocationMode.tag = null
+
+            isInitialSpinnerSetup = false
         }
     }
 
     private fun observeLanguageChange() {
         viewModel.languageChanged.observe(viewLifecycleOwner) { _ ->
-            Log.d("SettingsFragment", "Language changed, updating locale")
-            updateLocale()
-            // No immediate recreation; handled by SettingsActivity back press
+            Log.d("SettingsFragment", "Language changed, restarting activity")
+            val intent = Intent(requireContext(), SettingsActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            startActivity(intent)
+            requireActivity().finish()
         }
-    }
-
-    private fun updateLocale() {
-        val locale = viewModel.getLocale()
-        Log.d("SettingsFragment", "Setting locale to: $locale")
-        Locale.setDefault(locale)
-        val config = Configuration(resources.configuration).apply {
-            setLocale(locale)
-            setLayoutDirection(locale)
-        }
-        requireContext().createConfigurationContext(config)
-        resources.updateConfiguration(config, resources.displayMetrics)
     }
 
     private fun openMapFragment() {
+        viewModel.saveLocationMode("map")
+        Log.d("SettingsFragment", "Opening MapFragment with location mode set to map")
         requireActivity().supportFragmentManager.commit {
             setCustomAnimations(
                 R.anim.slide_in_from_right,

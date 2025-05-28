@@ -1,4 +1,4 @@
-package com.example.taqs360.settings
+package com.example.taqs360.settings.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

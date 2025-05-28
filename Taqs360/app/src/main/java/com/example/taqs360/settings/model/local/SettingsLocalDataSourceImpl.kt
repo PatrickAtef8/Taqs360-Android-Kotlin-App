@@ -2,6 +2,7 @@ package com.example.taqs360.settings.model.local
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import com.example.taqs360.map.model.LocationData
 import kotlinx.coroutines.Dispatchers
@@ -26,6 +27,7 @@ class SettingsLocalDataSourceImpl(private val context: Context) : SettingsLocalD
 
     override suspend fun saveTemperatureUnit(unit: String) {
         withContext(Dispatchers.IO) {
+            Log.d(TAG, "Saving temperature unit: $unit")
             prefs.edit(commit = true) {
                 putString(KEY_TEMP_UNIT, unit)
             }
@@ -34,6 +36,7 @@ class SettingsLocalDataSourceImpl(private val context: Context) : SettingsLocalD
 
     override suspend fun saveWindSpeedUnit(unit: String) {
         withContext(Dispatchers.IO) {
+            Log.d(TAG, "Saving wind speed unit: $unit")
             prefs.edit(commit = true) {
                 putString(KEY_WIND_SPEED_UNIT, unit)
             }
@@ -42,6 +45,7 @@ class SettingsLocalDataSourceImpl(private val context: Context) : SettingsLocalD
 
     override suspend fun saveLanguage(language: String) {
         withContext(Dispatchers.IO) {
+            Log.d(TAG, "Saving language: $language")
             prefs.edit(commit = true) {
                 putString(KEY_LANGUAGE, language)
             }
@@ -50,6 +54,7 @@ class SettingsLocalDataSourceImpl(private val context: Context) : SettingsLocalD
 
     override suspend fun saveLocationMode(mode: String) {
         withContext(Dispatchers.IO) {
+            Log.d(TAG, "Saving location mode: $mode")
             prefs.edit(commit = true) {
                 putString(KEY_LOCATION_MODE, mode)
             }
@@ -58,6 +63,7 @@ class SettingsLocalDataSourceImpl(private val context: Context) : SettingsLocalD
 
     override suspend fun saveLastLocation(location: LocationData) {
         withContext(Dispatchers.IO) {
+            Log.d(TAG, "Saving location: lat=${location.latitude}, lon=${location.longitude}")
             prefs.edit(commit = true) {
                 putFloat(KEY_LAST_LATITUDE, location.latitude.toFloat())
                 putFloat(KEY_LAST_LONGITUDE, location.longitude.toFloat())
@@ -69,6 +75,7 @@ class SettingsLocalDataSourceImpl(private val context: Context) : SettingsLocalD
         return withContext(Dispatchers.IO) {
             val latitude = prefs.getFloat(KEY_LAST_LATITUDE, Float.MIN_VALUE)
             val longitude = prefs.getFloat(KEY_LAST_LONGITUDE, Float.MIN_VALUE)
+            Log.d(TAG, "Retrieved location: lat=$latitude, lon=$longitude")
             if (latitude != Float.MIN_VALUE && longitude != Float.MIN_VALUE) {
                 LocationData(latitude.toDouble(), longitude.toDouble())
             } else {
@@ -78,23 +85,32 @@ class SettingsLocalDataSourceImpl(private val context: Context) : SettingsLocalD
     }
 
     override fun getTemperatureUnit(): String {
-        return prefs.getString(KEY_TEMP_UNIT, DEFAULT_TEMP_UNIT) ?: DEFAULT_TEMP_UNIT
+        val unit = prefs.getString(KEY_TEMP_UNIT, DEFAULT_TEMP_UNIT) ?: DEFAULT_TEMP_UNIT
+        Log.d(TAG, "Retrieved temperature unit: $unit")
+        return unit
     }
 
     override fun getWindSpeedUnit(): String {
-        return prefs.getString(KEY_WIND_SPEED_UNIT, DEFAULT_WIND_SPEED_UNIT) ?: DEFAULT_WIND_SPEED_UNIT
+        val unit = prefs.getString(KEY_WIND_SPEED_UNIT, DEFAULT_WIND_SPEED_UNIT) ?: DEFAULT_WIND_SPEED_UNIT
+        Log.d(TAG, "Retrieved wind speed unit: $unit")
+        return unit
     }
 
     override fun getLanguage(): String {
-        return prefs.getString(KEY_LANGUAGE, DEFAULT_LANGUAGE) ?: DEFAULT_LANGUAGE
+        val language = prefs.getString(KEY_LANGUAGE, DEFAULT_LANGUAGE) ?: DEFAULT_LANGUAGE
+        Log.d(TAG, "Retrieved language: $language")
+        return language
     }
 
     override fun getLocationMode(): String {
-        return prefs.getString(KEY_LOCATION_MODE, DEFAULT_LOCATION_MODE) ?: DEFAULT_LOCATION_MODE
+        val mode = prefs.getString(KEY_LOCATION_MODE, DEFAULT_LOCATION_MODE) ?: DEFAULT_LOCATION_MODE
+        Log.d(TAG, "Retrieved location mode: $mode")
+        return mode
     }
 
     override fun getLanguageSync(): String {
-        return prefs.getString(KEY_LANGUAGE, DEFAULT_LANGUAGE) ?: DEFAULT_LANGUAGE
+        val language = prefs.getString(KEY_LANGUAGE, DEFAULT_LANGUAGE) ?: DEFAULT_LANGUAGE
+        Log.d(TAG, "Retrieved language sync: $language")
+        return language
     }
 }
-

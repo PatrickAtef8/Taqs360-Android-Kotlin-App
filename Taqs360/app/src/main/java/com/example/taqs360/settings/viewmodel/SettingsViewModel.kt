@@ -1,4 +1,4 @@
-package com.example.taqs360.settings
+package com.example.taqs360.settings.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -93,8 +93,15 @@ class SettingsViewModel(
         val language = repository.getLanguage()
         Log.d(TAG, "Getting locale for language: $language")
         return when (language) {
+            "system" -> Locale.getDefault()
             "ar" -> Locale("ar")
             else -> Locale("en")
         }
+    }
+
+    fun getLanguage(): String {
+        val language = repository.getLanguage()
+        Log.d(TAG, "Getting language: $language")
+        return language
     }
 }
