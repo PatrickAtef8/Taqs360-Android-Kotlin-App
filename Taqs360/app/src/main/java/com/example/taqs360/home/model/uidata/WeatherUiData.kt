@@ -15,7 +15,9 @@ data class WeatherUiData(
     val currentWeatherIcon: Int,
     val forecasts: List<ForecastUiModel>,
     val timezoneOffset: Int,
-    val timezoneId: String
+    val timezoneId: String,
+    val isFromCache: Boolean = false,
+    val cachedUnits: String
 )
 
 data class ForecastUiModel(
