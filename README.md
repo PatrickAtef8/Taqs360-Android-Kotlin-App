@@ -1,38 +1,54 @@
-# Taqs360-Android-Kotlin-App
 
 # 🌦️ Taqs360 - Weather Forecast Android App
 
-**Taqs360** is a feature-rich Android application developed using **Kotlin** that delivers accurate weather forecasts with support for **alarms, search, favorite locations, map integration, and more**. It follows the **MVVM (Model-View-ViewModel)** architecture and leverages modern Android development best practices, making it scalable and testable.
+**Taqs360** is a feature-rich Android application built with **Kotlin**, providing accurate weather forecasts alongside features like **weather alarms, search, favorite locations, map integration, and more**. The app follows a clean **MVVM (Model-View-ViewModel)** architecture with repository pattern and clean modularization, ensuring scalability, maintainability, and testability.
 
 ---
 
 ## 🚀 Features
 
-- **📍 Location-based weather** forecast
-- **📡 Real-time updates** using remote APIs
-- **📅 Alarms & notifications** for extreme weather alerts
-- **🔍 Search** for locations using Nominatim API
-- **🗺️ Map view** for selecting and visualizing locations
-- **❤️ Favorite Locations** for quick access
-- **🧠 Clean Architecture** with repository pattern
-- **💾 Local caching** via Room DB
-- **📊 Graphs** for temperature trends
-- **🌐 Network monitoring**
-- **🛠️ MVVM + Repository Pattern** throughout
+- 📍 **Location-Based Forecasts**  
+  Get current weather data based on your GPS location.
+
+- 📡 **Real-Time Weather Updates**  
+  Fetch up-to-date data from remote weather APIs.
+
+- 📅 **Weather Alarms & Notifications**  
+  Set alerts for extreme weather conditions.
+
+- 🔍 **Search for Locations**  
+  Search any city using Nominatim API with dynamic suggestions.
+
+- 🗺️ **Interactive Map View**  
+  Select and visualize locations on a map.
+
+- ❤️ **Favorite Locations**  
+  Save locations for quick future access.
+
+- 🧠 **Clean Architecture**  
+  Fully decoupled layers using MVVM and repository pattern.
+
+- 💾 **Offline Caching**  
+  Store weather and location data locally using Room DB.
+
+- 📊 **Graphical Temperature Trends**  
+  Visual representation of forecasts with custom graphs.
+
+- 🌐 **Network Monitoring**  
+  Automatically detects connection status.
 
 ---
 
 ## 🧠 Architecture Overview
 
-- **Model:** Handles data operations (local & remote)
-- **View:** UI components and user interaction
-- **ViewModel:** Exposes data to views & handles logic
-- **Repository:** Mediates between data sources (local/db/network)
+The application is built using a **modular clean architecture** with the following key layers:
 
-Each feature is **modularized** with its own:
-- `model` (data classes, DAO, data sources, repository)
-- `view` (Activities, Fragments, Adapters)
-- `viewmodel` (ViewModel and Factory)
+- **Model:** Data layer including network, local DB, and data sources.
+- **ViewModel:** Business logic, exposed data, state management.
+- **View:** Activities, Fragments, Adapters – tied to the UI lifecycle.
+- **Repository:** Abstraction layer for accessing different data sources.
+
+Each feature (e.g., weather, alarm, map) is isolated into a module-like package to ensure separation of concerns.
 
 ---
 
@@ -40,156 +56,46 @@ Each feature is **modularized** with its own:
 
 ```bash
 .
-├── alarm
-│   ├── model
-│   │   ├── AlarmData.kt
-│   │   ├── datasource
-│   │   │   ├── AlarmDao.kt
-│   │   │   ├── AlarmLocalDataSourceImpl.kt
-│   │   │   ├── AlarmLocalDataSource.kt
-│   │   │   └── AppDatabase.kt
-│   │   ├── LocationDataConverter.kt
-│   │   └── repository
-│   │       ├── AlarmRepositoryImpl.kt
-│   │       └── AlarmRepository.kt
-│   ├── receiver
-│   │   └── DismissAlarmReceiver.kt
-│   ├── view
-│   │   ├── AlarmAdapter.kt
-│   │   ├── DatePickerFragment.kt
-│   │   ├── TimePickerFragment.kt
-│   │   └── WeatherAlertsActivity.kt
-│   └── viewmodel
-│       ├── AlarmViewModelFactory.kt
-│       ├── AlarmViewModel.kt
-│       └── AlarmWorker.kt
-├── favorite
-│   ├── model
-│   │   ├── dao
-│   │   │   └── FavoriteLocationDao.kt
-│   │   ├── data
-│   │   │   └── FavoriteLocation.kt
-│   │   ├── database
-│   │   │   └── AppDatabase.kt
-│   │   ├── datasource
-│   │   │   ├── FavoriteLocalDataSourceImpl.kt
-│   │   │   └── FavoriteLocalDataSource.kt
-│   │   └── repository
-│   │       ├── FavoriteRepositoryImpl.kt
-│   │       └── FavoriteRepository.kt
-│   ├── view
-│   │   ├── FavoriteActivity.kt
-│   │   └── FavoriteAdapter.kt
-│   └── viewmodel
-│       ├── FavoriteViewModelFactory.kt
-│       └── FavoriteViewModel.kt
-├── home
-│   ├── model
-│   │   ├── local
-│   │   │   ├── WeatherDao.kt
-│   │   │   ├── WeatherDatbase.kt
-│   │   │   ├── WeatherEntity.kt
-│   │   │   ├── WeatherLocalDataSourceImpl.kt
-│   │   │   ├── WeatherLocalDataSource.kt
-│   │   │   └── WeatherTypeConverters.kt
-│   │   ├── pojo
-│   │   │   ├── WeatherDataClasses.kt
-│   │   │   └── WeatherData.kt
-│   │   ├── remote
-│   │   │   ├── RetrofitHelper.kt
-│   │   │   ├── WeatherRemoteDataSourceImpl.kt
-│   │   │   ├── WeatherRemoteDataSource.kt
-│   │   │   └── WeatherService.kt
-│   │   ├── repository
-│   │   │   ├── WeatherRepositoryImpl.kt
-│   │   │   └── WeatherRepository.kt
-│   │   └── uidata
-│   │       └── WeatherUiData.kt
-│   ├── util
-│   │   ├── WeatherUnitConverter.java
-│   │   └── WeatherUtils.kt
-│   ├── view
-│   │   ├── ForecastAdapter.kt
-│   │   ├── GraphDrawer.java
-│   │   ├── TemperatureGraphView.kt
-│   │   ├── ThreeHoursForecastAdapter.kt
-│   │   └── WeatherActivity.kt
-│   └── viewmodel
-│       ├── WeatherViewModelFactory.kt
-│       └── WeatherViewModel.kt
-├── location
-│   ├── LocationDataSource.kt
-│   ├── LocationResult.kt
-│   └── PermissionHandler.kt
-├── map
-│   ├── model
-│   │   ├── datasource
-│   │   │   ├── MapLocalDataSourceImpl.kt
-│   │   │   └── MapLocalDataSource.kt
-│   │   ├── LocationData.kt
-│   │   └── repository
-│   │       ├── MapRepositoryImpl.kt
-│   │       └── MapRepository.kt
-│   ├── util
-│   │   └── MapUtils.kt
-│   ├── view
-│   │   └── MapFragment.kt
-│   └── viewmodel
-│       ├── MapViewModelFactory.kt
-│       └── MapViewModel.kt
-├── network
-│   └── NetworkMonitor.kt
-├── search
-│   ├── model
-│   │   ├── datasource
-│   │   │   ├── NominatimService.kt
-│   │   │   ├── SearchRemoteDataSourceImpl.kt
-│   │   │   └── SearchRemoteDataSource.kt
-│   │   ├── NominatimResult.kt
-│   │   ├── Place.kt
-│   │   └── repository
-│   │       ├── SearchRepositoryImpl.kt
-│   │       └── SearchRepository.kt
-│   ├── util
-│   │   └── RetrofitHelper.kt
-│   ├── view
-│   │   ├── SearchActivity.kt
-│   │   └── SearchAdapter.kt
-│   └── viewmodel
-│       ├── SearchViewModelFactory.kt
-│       └── SearchViewModel.kt
-├── settings
-│   ├── model
-│   │   ├── local
-│   │   │   ├── SettingsLocalDataSourceImpl.kt
-│   │   │   └── SettingsLocalDataSource.kt
-│   │   ├── remote
-│   │   │   ├── SettingsRemoteDataSourceImpl.kt
-│   │   │   └── SettingsRemoteDataSource.kt
-│   │   ├── repository
-│   │   │   ├── SettingsRepositoryImpl.kt
-│   │   │   └── SettingsRepository.kt
-│   │   └── Settings.kt
-│   ├── view
-│   │   ├── SettingsActivity.kt
-│   │   └── SettingsFragment.kt
-│   └── viewmodel
-│       ├── SettingsViewModelFactory.kt
-│       └── SettingsViewModel.kt
-└── splash
-    ├── model
-    │   └── repository
-    │       └── SplashRepository.kt
-    ├── view
-    │   └── SplashActivity.kt
-    └── viewmodel
-        └── SplashViewModel.kt
+├── alarm/
+│   ├── model/
+│   │   ├── AlarmData.kt, AlarmDao.kt, AppDatabase.kt, ...
+│   ├── view/ → WeatherAlertsActivity.kt, DatePickerFragment.kt, ...
+│   └── viewmodel/ → AlarmViewModel.kt, AlarmWorker.kt
+├── favorite/
+│   ├── model/ → FavoriteLocation.kt, DAO, repository, ...
+│   ├── view/ → FavoriteActivity.kt, FavoriteAdapter.kt
+│   └── viewmodel/ → FavoriteViewModel.kt
+├── home/
+│   ├── model/
+│   │   ├── pojo/, remote/, local/, repository/
+│   ├── view/ → WeatherActivity.kt, GraphDrawer.java, ForecastAdapter.kt
+│   └── viewmodel/ → WeatherViewModel.kt
+├── location/ → LocationDataSource.kt, LocationResult.kt, PermissionHandler.kt
+├── map/
+│   ├── model/ → LocationData.kt, repository, datasource/
+│   ├── view/ → MapFragment.kt
+│   └── viewmodel/ → MapViewModel.kt
+├── network/ → NetworkMonitor.kt
+├── search/
+│   ├── model/ → NominatimService.kt, repository/, datasource/
+│   ├── view/ → SearchActivity.kt, SearchAdapter.kt
+│   └── viewmodel/ → SearchViewModel.kt
+├── settings/
+│   ├── model/ → Settings.kt, repository/, datasource/
+│   ├── view/ → SettingsActivity.kt, SettingsFragment.kt
+│   └── viewmodel/ → SettingsViewModel.kt
+└── splash/
+    ├── view/ → SplashActivity.kt
+    └── viewmodel/ → SplashViewModel.kt
+```
 
+---
 
-        # 🌦️ Weather App - Full Architecture
+## 📈 Architecture Diagram
 
 ```mermaid
 classDiagram
+    %% Core
     class NetworkMonitor
     class LocationDataSource
     class PermissionHandler
@@ -197,6 +103,7 @@ classDiagram
     LocationDataSource --> LocationResult
     LocationDataSource --> PermissionHandler
 
+    %% Weather
     class WeatherActivity
     class WeatherViewModel
     class WeatherRepository
@@ -207,6 +114,7 @@ classDiagram
     WeatherRepository --> WeatherRemoteDataSource
     WeatherRepository --> WeatherLocalDataSource
 
+    %% Alarms
     class WeatherAlertsActivity
     class AlarmViewModel
     class AlarmRepository
@@ -215,6 +123,7 @@ classDiagram
     AlarmViewModel --> AlarmRepository
     AlarmRepository --> AlarmLocalDataSource
 
+    %% Favorites
     class FavoriteActivity
     class FavoriteViewModel
     class FavoriteRepository
@@ -223,27 +132,58 @@ classDiagram
     FavoriteViewModel --> FavoriteRepository
     FavoriteRepository --> FavoriteLocalDataSource
 
+    %% Map
     class MapFragment
     class MapViewModel
     class MapRepository
     MapFragment --> MapViewModel
     MapViewModel --> MapRepository
 
+    %% Search
     class SearchActivity
     class SearchViewModel
     class SearchRepository
     SearchActivity --> SearchViewModel
     SearchViewModel --> SearchRepository
 
+    %% Settings
     class SettingsActivity
     class SettingsViewModel
     class SettingsRepository
     SettingsActivity --> SettingsViewModel
     SettingsViewModel --> SettingsRepository
 
+    %% Splash
     class SplashActivity
     class SplashViewModel
     SplashActivity --> SplashViewModel
+```
 
-    class SplashViewModel
-    SplashActivity --> SplashViewModel
+---
+
+## 🔄 Dependencies & Tech Stack
+
+- **Language:** Kotlin  
+- **Architecture:** MVVM + Clean Architecture + Repository Pattern  
+- **UI:** Material Components, Fragments, RecyclerView, GraphView  
+- **Persistence:** Room Database  
+- **Networking:** Retrofit, Coroutines  
+- **Location:** Fused Location Provider, Nominatim API  
+- **Map:** Google Maps or OpenStreetMap (via MapFragment)  
+- **Alarm & Alerts:** AlarmManager + WorkManager  
+- **Others:** LiveData, ViewModel, Factory, BroadcastReceiver  
+
+---
+
+## 🧪 Testing & Debugging
+
+- **ViewModel Tests:** Unit tested using JUnit and mock data sources.  
+- **Repository Tests:** Mocked both Room DB and Retrofit APIs.  
+- **Manual UI Testing:** Verified using various emulators and real devices.
+
+
+---
+
+
+## 🙌 Credits
+Powered by: OpenWeatherMap, Nominatim, AndroidX, and Jetpack Libraries.
