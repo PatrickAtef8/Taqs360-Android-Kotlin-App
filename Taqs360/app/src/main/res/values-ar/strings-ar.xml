@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">طقس ٣٦٠</string>
     <string name="settings_title">الإعدادات</string>
+    <string name="alerts_title">المنبه</string>
     <string name="temperature_unit">وحدة درجة الحرارة</string>
     <string name="wind_speed_unit">وحدة سرعة الرياح</string>
     <string name="language">اللغة</string>
@@ -37,6 +38,34 @@
     <string name="app_logo_desc">شعار التطبيق</string>
     <string name="nav_header_title">تطبيق الطقس</string>
     <string name="nav_header_subtitle">توقعاتك المحلية</string>
-    <string name="today">اليوم</string> <!-- Added -->
-    <string name="tomorrow">غداً</string> <!-- Added -->
+    <string name="today">اليوم</string>
+    <string name="tomorrow">غداً</string>
+    <string name="no_alarms">لا توجد منبهات طقس مضبوطة</string>
+    <string name="confirm">تأكيد</string>
+    <string name="alarm_time">منبه في %s</string>
+    <string name="select_time">اختر الوقت</string>
+    <string name="select_date">اختر التاريخ</string>
+    <string name="time_selected">الوقت: %s</string>
+    <string name="date_selected">التاريخ: %s</string>
+    <string name="cancel">إلغاء</string>
+    <string name="am">ص</string>
+    <string name="pm">م</string>
+    <string name="btn_select_time">اختر الوقت</string>
+    <string name="btn_select_date">اختر التاريخ</string>
+    <string name="time_picker_description">نافذة اختيار الوقت</string>
+    <string name="date_picker_description">نافذة اختيار التاريخ</string>
+    <string name="time_icon_description">أيقونة الساعة</string>
+    <string name="date_icon_description">أيقونة التقويم</string>
+    <string name="time_format">hh:mm a</string>
+    <string name="date_format">MMM dd, yyyy</string>
+    <string name="selected_time">الوقت المحدد: %s</string>
+    <string name="temperature_unit_hint">اختر وحدة درجة الحرارة</string>
+    <string name="wind_speed_unit_hint">اختر وحدة سرعة الرياح</string>
+    <string name="language_hint">اختر اللغة</string>
+    <string name="add_favorite_location">إضافة موقع مفضل</string>
+    <string name="favorites_title">المفضلة</string>
+    <string name="no_favorites">لا توجد مواقع مفضلة مضبوطة</string>
+    <string name="favorite_removed">تم إزالة الموقع المفضل</string>
+    <string name="undo">تراجع</string>
+    <string name="system_default">لغة النظام</string>
 </resources>

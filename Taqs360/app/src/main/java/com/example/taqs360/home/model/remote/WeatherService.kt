@@ -1,4 +1,4 @@
-package com.example.taqs360.home.model.network
+package com.example.taqs360.home.model.remote
 
 import com.example.taqs360.home.model.pojo.WeatherResponse
 import retrofit2.http.GET

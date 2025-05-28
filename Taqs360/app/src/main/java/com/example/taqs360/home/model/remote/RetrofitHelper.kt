@@ -1,4 +1,4 @@
-package com.example.taqs360.home.model.network
+package com.example.taqs360.home.model.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory

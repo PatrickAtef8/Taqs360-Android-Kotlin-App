@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -17,11 +18,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Taqs360">
         <activity
+            android:name=".favorite.view.FavoriteActivity"
+            android:exported="false" />
+        <activity
             android:name=".splash.view.SplashActivity"
             android:exported="true"
             android:theme="@style/Theme.Taqs360">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -29,11 +34,25 @@
             android:name=".home.view.WeatherActivity"
             android:exported="false" />
         <activity
-            android:name=".settings.SettingsActivity"
+            android:name=".settings.view.SettingsActivity"
+            android:exported="false"
             android:label="@string/settings_title"
             tools:ignore="Instantiatable" />
         <activity
             android:name=".search.view.SearchActivity"
             android:exported="false" />
+        <activity
+            android:name=".alarm.view.WeatherAlertsActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Taqs360" />
+
+        <receiver
+            android:name=".alarm.receiver.DismissAlarmReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.taqs360.DISMISS_ALARM" />
+            </intent-filter>
+        </receiver>
     </application>
+
 </manifest>

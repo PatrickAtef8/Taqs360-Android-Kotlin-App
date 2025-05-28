@@ -1,0 +1,15 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Blur overlay -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#40FFFFFF"/> <!-- Translucent white -->
+            <corners android:radius="32dp"/>
+        </shape>
+    </item>
+
+    <!-- Subtle gradient -->
+    <item>
+        <bitmap android:src="@drawable/bg_gradient"
+            android:gravity="center"/>
+    </item>
+</layer-list>
