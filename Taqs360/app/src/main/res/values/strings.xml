@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Taqs360</string>
     <string name="settings_title">Settings</string>
+    <string name="alerts_title">Alerts</string>
     <string name="temperature_unit">Temperature Unit</string>
     <string name="wind_speed_unit">Wind Speed Unit</string>
     <string name="language">Language</string>
@@ -38,5 +39,38 @@
     <string name="nav_header_title">Weather App</string>
     <string name="nav_header_subtitle">Your local forecast</string>
     <string name="today">Today</string> <!-- Added -->
-    <string name="tomorrow">Tomorrow</string> <!-- Added -->
+    <string name="tomorrow">Tomorrow</string>
+    <string name="no_alarms">No weather alarms set</string>
+    <string name="confirm">Confirm</string>
+    <string name="alarm_time">Alarm at %s</string>
+    <string name="select_time">Select Time</string>
+    <string name="select_date">Select Date</string>
+    <string name="time_selected">Time: %s</string>
+    <string name="date_selected">Date: %s</string>
+    <string name="cancel">Cancel</string>
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+    <string name="btn_select_time">Select Time</string>
+    <string name="btn_select_date">Select Date</string>
+    <string name="time_picker_description">Time picker dialog</string>
+    <string name="date_picker_description">Date picker dialog</string>
+    <string name="time_icon_description">Clock icon</string>
+    <string name="date_icon_description">Calendar icon</string>
+    <string name="time_format">hh:mm a</string>
+    <string name="date_format">MMM dd, yyyy</string>
+    <string name="selected_time">Selected Time: %s</string>
+    <string name="temperature_unit_hint">Select temperature unit</string>
+    <string name="wind_speed_unit_hint">Select wind speed unit</string>
+    <string name="language_hint" >Select language</string>
+    <string name="add_favorite_location">Add favorite location</string>
+    <!-- New strings for Favorites -->
+    <string name="favorites_title">Favorites</string>
+    <string name="no_favorites">No favorite locations set</string>
+    <string name="favorite_removed">Favorite removed</string>
+    <string name="undo">Undo</string>
+    <string name="no_cached_weather" translatable="false">No cached weather data</string>
+    <string name="no_location_data" translatable="false">No location data available</string>
+    <string name="system_default">System Default</string>
+
+
 </resources>

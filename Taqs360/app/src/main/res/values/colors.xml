@@ -17,12 +17,12 @@
     <color name="primary_dark">#1565C0</color>
     <color name="accent">#FF4081</color>
     <color name="background">#F5F5F5</color>
-
+<color name="navy_dark">#161E26</color>
 
     <!-- New colors for day theme -->
     <color name="day_start">#FF87CEEB</color> <!-- Matches sky_blue -->
     <color name="day_end">#FFFFFFFF</color> <!-- White, matches bg_gradient -->
-
+    <color name="colorOnSurface">#212121</color>
     <!-- New colors for night theme -->
     <color name="night_start">#FF1E3A5F</color> <!-- Dark blue, nighttime feel -->
     <color name="night_end">#FF2E4A7A</color> <!-- Slightly lighter dark blue -->
@@ -31,8 +31,14 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+    <color name="glassmorphicBg">#40FFFFFF</color> <!-- 25% opacity white -->
 
 
 
+    <color name="semi_transparent_white">#40FFFFFF</color>
+
+
+        <!-- Dark theme colors -->
+        <color name="dark_surface">#121212</color>
 
 </resources>
