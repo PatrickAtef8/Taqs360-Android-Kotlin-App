@@ -5,7 +5,9 @@ data class WeatherResponse(
     val message: Int,
     val cnt: Int,
     val list: List<Forecast>,
-    val city: City
+    val city: City,
+    val temperatureUnit: String = "Celsius",
+    val windSpeedUnit: String = "meters_sec"
 )
 
 data class Forecast(
