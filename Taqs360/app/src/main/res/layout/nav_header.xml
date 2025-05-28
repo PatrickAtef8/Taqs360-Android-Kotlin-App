@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="120dp"
     android:layout_margin="0dp"
-    android:backgroundTint="@null"
+    android:background="@color/semi_transparent_white"
+    android:backgroundTint="@color/white"
     app:cardBackgroundColor="#40FFFFFF"
     app:cardCornerRadius="16dp"
-    app:cardElevation="4dp">
+    app:cardElevation="4dp"
+    app:strokeColor="@android:color/transparent"
+    app:strokeWidth="0dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/bg_gradient"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         android:padding="16dp">
 
         <!-- App Logo -->
@@ -21,40 +24,40 @@
             android:id="@+id/iv_app_logo"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/ic_app_logo"
+            android:layout_marginStart="8dp"
             android:contentDescription="App logo"
             android:scaleType="centerInside"
-            app:tint="?attr/colorOnSurface"
+            android:src="@drawable/ic_app_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="8dp" />
+            app:tint="?attr/colorOnSurface" />
 
         <!-- App Name -->
         <TextView
             android:id="@+id/tv_app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@string/app_name"
             android:textAppearance="?attr/textAppearanceHeadline6"
             android:textColor="?attr/colorOnSurface"
             android:textStyle="bold"
-            app:layout_constraintStart_toEndOf="@id/iv_app_logo"
-            app:layout_constraintTop_toTopOf="@id/iv_app_logo"
             app:layout_constraintBottom_toTopOf="@id/tv_tagline"
-            android:layout_marginStart="16dp" />
+            app:layout_constraintStart_toEndOf="@id/iv_app_logo"
+            app:layout_constraintTop_toTopOf="@id/iv_app_logo" />
 
         <!-- Tagline -->
         <TextView
             android:id="@+id/tv_tagline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:text="@string/weather_at_a_glance"
             android:textAppearance="?attr/textAppearanceBody2"
             android:textColor="?attr/colorOnSurfaceVariant"
-            app:layout_constraintStart_toEndOf="@id/iv_app_logo"
-            app:layout_constraintTop_toBottomOf="@id/tv_app_name"
             app:layout_constraintBottom_toBottomOf="@id/iv_app_logo"
-            android:layout_marginStart="16dp" />
+            app:layout_constraintStart_toEndOf="@id/iv_app_logo"
+            app:layout_constraintTop_toBottomOf="@id/tv_app_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

@@ -13,6 +13,7 @@
         android:orientation="horizontal"
         android:weightSum="5">
 
+        <!-- Day text remains unchanged -->
         <TextView
             android:id="@+id/tv_day"
             android:layout_width="0dp"
@@ -23,6 +24,7 @@
             android:textColor="#161E26"
             android:textSize="16sp" />
 
+        <!-- Weather icon remains unchanged -->
         <ImageView
             android:id="@+id/iv_weather_icon"
             android:layout_width="0dp"
@@ -31,39 +33,53 @@
             android:src="@drawable/sunny"
             android:scaleType="fitCenter" />
 
+        <!-- Temperature container -->
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:weightSum="3">
 
+            <!-- Min Temp -->
             <TextView
                 android:id="@+id/tv_temp_min"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="17°"
+                android:layout_weight="1"
+                android:gravity="end|center_vertical"
+                android:text="290K"
                 android:textColor="#161E26"
                 android:textSize="16sp"
-                android:layout_marginEnd="10dp" />
+                android:includeFontPadding="false"
+                android:layout_marginEnd="8dp"
+                android:minWidth="40dp"/>
 
+            <!-- Progress Bar -->
             <ProgressBar
                 android:id="@+id/pb_temp_range"
                 style="?android:attr/progressBarStyleHorizontal"
-                android:layout_width="60dp"
+                android:layout_width="0dp"
                 android:layout_height="4dp"
+                android:layout_weight="1"
                 android:max="100"
                 android:progress="0"
-                android:progressDrawable="@drawable/temp_range_progress"
-                android:layout_marginEnd="10dp" />
+                android:progressDrawable="@drawable/temp_range_progress"/>
 
+            <!-- Max Temp (adjusted) -->
             <TextView
                 android:id="@+id/tv_temp_max"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="31°"
+                android:layout_weight="1"
+                android:gravity="start|center_vertical"
+                android:text="310K"
                 android:textColor="#161E26"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:includeFontPadding="false"
+                android:layout_marginStart="8dp"
+                android:minWidth="40dp"/>
 
         </LinearLayout>
 
