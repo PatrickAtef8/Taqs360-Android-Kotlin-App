@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.taqs360.R
 import com.example.taqs360.databinding.FragmentMapBinding
+import com.example.taqs360.home.view.WeatherActivity
 import com.example.taqs360.location.LocationDataSource
 import com.example.taqs360.location.LocationResult
 import com.example.taqs360.map.model.LocationData
@@ -47,10 +48,19 @@ class MapFragment : Fragment() {
             val latitude = data?.getDoubleExtra("latitude", 0.0) ?: 0.0
             val longitude = data?.getDoubleExtra("longitude", 0.0) ?: 0.0
             if (latitude != 0.0 && longitude != 0.0) {
-                // Log to confirm result received
                 android.util.Log.d(TAG, "Search result: lat=$latitude, lon=$longitude")
                 mapViewModel.setSelectedLocation(LocationData(latitude, longitude))
-                requireActivity().supportFragmentManager.popBackStack()
+                if (requireActivity() is WeatherActivity) {
+                    requireActivity().supportFragmentManager.popBackStack()
+                } else {
+                    val intent = Intent(requireContext(), WeatherActivity::class.java).apply {
+                        putExtra("latitude", latitude)
+                        putExtra("longitude", longitude)
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    }
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
             } else {
                 android.util.Log.w(TAG, "Invalid search result: lat=$latitude, lon=$longitude")
                 Toast.makeText(requireContext(), "Invalid location selected", Toast.LENGTH_SHORT).show()
@@ -70,8 +80,10 @@ class MapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Configure osmdroid
-        Configuration.getInstance().osmdroidBasePath = File(requireContext().cacheDir, "osmdroid")
-        Configuration.getInstance().userAgentValue = requireContext().packageName
+        Configuration.getInstance().apply {
+            osmdroidBasePath = File(requireContext().cacheDir, "osmdroid")
+            userAgentValue = requireContext().packageName
+        }
 
         binding.mapView.apply {
             setTileSource(TileSourceFactory.MAPNIK)
@@ -90,11 +102,6 @@ class MapFragment : Fragment() {
                     android.util.Log.d(TAG, "Current location set: lat=${location.latitude}, lon=${location.longitude}")
                 }
                 is LocationResult.Failure -> {
-                    Toast.makeText(
-                        requireContext(),
-                        "Using default location: ${result.exception.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
                     val defaultGeoPoint = GeoPoint(30.0444, 31.2357) // Cairo
                     binding.mapView.controller.setCenter(defaultGeoPoint)
                     addMarker(defaultGeoPoint)
@@ -107,11 +114,21 @@ class MapFragment : Fragment() {
         val mapEventsReceiver = object : MapEventsReceiver {
             override fun singleTapConfirmedHelper(p: GeoPoint?): Boolean {
                 p?.let {
-                    binding.mapView.overlays.removeAll { it is Marker }
+                    binding.mapView.overlays.removeAll { overlay -> overlay is Marker }
                     addMarker(p)
                     mapViewModel.setSelectedLocation(LocationData(p.latitude, p.longitude))
                     android.util.Log.d(TAG, "Map tapped: lat=${p.latitude}, lon=${p.longitude}")
-                    requireActivity().supportFragmentManager.popBackStack()
+                    if (requireActivity() is WeatherActivity) {
+                        requireActivity().supportFragmentManager.popBackStack()
+                    } else {
+                        val intent = Intent(requireContext(), WeatherActivity::class.java).apply {
+                            putExtra("latitude", p.latitude)
+                            putExtra("longitude", p.longitude)
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        }
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
                 }
                 return true
             }
@@ -153,6 +170,7 @@ class MapFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.mapView.overlays.clear()
         _binding = null
     }
 }
