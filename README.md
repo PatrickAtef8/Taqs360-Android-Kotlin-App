@@ -190,7 +190,6 @@ Each feature is **modularized** with its own:
 
 ```mermaid
 classDiagram
-    %% ====================== CORE COMPONENTS ======================
     class NetworkMonitor
     class LocationDataSource
     class PermissionHandler
@@ -198,7 +197,6 @@ classDiagram
     LocationDataSource --> LocationResult
     LocationDataSource --> PermissionHandler
 
-    %% ====================== WEATHER FEATURE ======================
     class WeatherActivity
     class WeatherViewModel
     class WeatherRepository
@@ -209,7 +207,6 @@ classDiagram
     WeatherRepository --> WeatherRemoteDataSource
     WeatherRepository --> WeatherLocalDataSource
 
-    %% ====================== ALARM FEATURE ======================
     class WeatherAlertsActivity
     class AlarmViewModel
     class AlarmRepository
@@ -218,7 +215,6 @@ classDiagram
     AlarmViewModel --> AlarmRepository
     AlarmRepository --> AlarmLocalDataSource
 
-    %% ====================== FAVORITES FEATURE ======================
     class FavoriteActivity
     class FavoriteViewModel
     class FavoriteRepository
@@ -227,28 +223,27 @@ classDiagram
     FavoriteViewModel --> FavoriteRepository
     FavoriteRepository --> FavoriteLocalDataSource
 
-    %% ====================== MAP FEATURE ======================
     class MapFragment
     class MapViewModel
     class MapRepository
     MapFragment --> MapViewModel
     MapViewModel --> MapRepository
 
-    %% ====================== SEARCH FEATURE ======================
     class SearchActivity
     class SearchViewModel
     class SearchRepository
     SearchActivity --> SearchViewModel
     SearchViewModel --> SearchRepository
 
-    %% ====================== SETTINGS FEATURE ======================
     class SettingsActivity
     class SettingsViewModel
     class SettingsRepository
     SettingsActivity --> SettingsViewModel
     SettingsViewModel --> SettingsRepository
 
-    %% ====================== SPLASH FEATURE ======================
     class SplashActivity
+    class SplashViewModel
+    SplashActivity --> SplashViewModel
+
     class SplashViewModel
     SplashActivity --> SplashViewModel
