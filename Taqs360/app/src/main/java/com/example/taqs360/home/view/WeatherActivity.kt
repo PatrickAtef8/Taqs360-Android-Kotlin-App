@@ -375,7 +375,14 @@ class WeatherActivity : AppCompatActivity() {
 
     private fun handleIntent(intent: Intent?) {
         intent?.let {
-            if (it.getBooleanExtra("open_map", false)) {
+            if (it.getBooleanExtra("force_gps_refresh", false)) {
+                lifecycleScope.launch {
+                    viewModel.saveLocationMode("gps")
+                    viewModel.clearLastLocation()
+                    Log.d(TAG, "Forcing GPS refresh: cleared last location and fetching current GPS")
+                    viewModel.requestLocationAndFetchWeather()
+                }
+            } else if (it.getBooleanExtra("open_map", false)) {
                 viewModel.openMapFragment()
                 Log.d(TAG, "Opening MapFragment for location selection")
             } else if (it.hasExtra("latitude") && it.hasExtra("longitude")) {
