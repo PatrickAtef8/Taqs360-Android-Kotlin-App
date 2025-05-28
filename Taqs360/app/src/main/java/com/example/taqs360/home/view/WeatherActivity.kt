@@ -36,7 +36,7 @@ import com.example.taqs360.settings.model.local.SettingsLocalDataSourceImpl
 import com.example.taqs360.settings.model.remote.SettingsRemoteDataSourceImpl
 import com.example.taqs360.settings.model.repository.SettingsRepository
 import com.example.taqs360.settings.model.repository.SettingsRepositoryImpl
-import com.example.taqs360.alerts.view.WeatherAlertsActivity
+import com.example.taqs360.alarm.view.WeatherAlertsActivity
 import com.example.taqs360.favorite.view.FavoriteActivity
 import com.example.taqs360.settings.view.SettingsActivity
 import kotlinx.coroutines.launch
