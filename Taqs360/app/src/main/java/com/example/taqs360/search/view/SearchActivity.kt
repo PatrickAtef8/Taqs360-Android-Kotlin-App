@@ -13,6 +13,7 @@ import com.example.taqs360.databinding.ActivitySearchBinding
 import com.example.taqs360.search.model.datasource.SearchRemoteDataSourceImpl
 import com.example.taqs360.search.model.repository.SearchRepositoryImpl
 import com.example.taqs360.search.viewmodel.SearchViewModel
+import com.example.taqs360.search.viewmodel.SearchViewModelFactory
 import kotlinx.coroutines.*
 
 class SearchActivity : AppCompatActivity() {
@@ -33,7 +34,8 @@ class SearchActivity : AppCompatActivity() {
             SearchRepositoryImpl(
             SearchRemoteDataSourceImpl()
         )
-        ))
+        )
+        )
             .get(SearchViewModel::class.java)
 
         // Setup RecyclerView

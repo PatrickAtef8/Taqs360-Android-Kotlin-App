@@ -1,9 +1,8 @@
-package com.example.taqs360.search.view
+package com.example.taqs360.search.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.taqs360.search.model.repository.SearchRepository
-import com.example.taqs360.search.viewmodel.SearchViewModel
 
 class SearchViewModelFactory(
     private val repository: SearchRepository

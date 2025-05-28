@@ -53,8 +53,6 @@ class WeatherActivity : AppCompatActivity() {
     private lateinit var mapViewModel: MapViewModel
     private lateinit var forecastAdapter: ForecastAdapter
     private lateinit var threeHoursForecastAdapter: ThreeHoursForecastAdapter
-    private lateinit var networkMonitor: NetworkMonitor
-    private lateinit var settingsRepository: SettingsRepository
     private val TAG = "WeatherActivity"
     private var isReturningFromMap = false
 
@@ -67,12 +65,7 @@ class WeatherActivity : AppCompatActivity() {
         binding = ActivityWeatherBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        networkMonitor = NetworkMonitor(this)
 
-        settingsRepository = SettingsRepositoryImpl(
-            SettingsLocalDataSourceImpl(this),
-            SettingsRemoteDataSourceImpl()
-        )
 
         viewModel = ViewModelProvider(
             this,
@@ -80,14 +73,21 @@ class WeatherActivity : AppCompatActivity() {
                 WeatherRepositoryImpl(
                     WeatherRemoteDataSourceImpl(
                         RetrofitHelper.getInstance().create(WeatherService::class.java),
-                        settingsRepository
+                        SettingsRepositoryImpl(
+                            SettingsLocalDataSourceImpl(this),
+                            SettingsRemoteDataSourceImpl()
+                        )
                     ),
                     WeatherLocalDataSourceImpl(WeatherDatabase.getDatabase(this).weatherDao())
                 ),
                 LocationDataSource(this),
-                settingsRepository,
+                SettingsRepositoryImpl(
+                    SettingsLocalDataSourceImpl(this),
+                    SettingsRemoteDataSourceImpl()
+                ),
                 this,
-                networkMonitor
+                NetworkMonitor(this)
+
             )
         ).get(WeatherViewModel::class.java)
 
@@ -279,14 +279,15 @@ class WeatherActivity : AppCompatActivity() {
             }
 
             if (weather.isFromCache) {
-                Toast.makeText(this, "Showing cached weather data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Showing Your Last Update! Enjoy", Toast.LENGTH_SHORT).show()
             }
         }
 
-        networkMonitor.isConnected.observe(this) { isConnected ->
+        NetworkMonitor(this)
+            .isConnected.observe(this) { isConnected ->
             binding.swipeRefreshLayout.isEnabled = isConnected
             if (!isConnected) {
-                Toast.makeText(this, "No internet connection. Using cached data.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "No internet connection! Refresh the screen after restoring your Network!.", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -342,7 +343,10 @@ class WeatherActivity : AppCompatActivity() {
             }
         }
 
-        settingsRepository.settings.observe(this) { settings ->
+        SettingsRepositoryImpl(
+            SettingsLocalDataSourceImpl(this),
+            SettingsRemoteDataSourceImpl()
+        ).settings.observe(this) { settings ->
             forecastAdapter.updateSettings(settings.temperatureUnit, viewModel.getLocale().language == "ar")
             threeHoursForecastAdapter.updateSettings(
                 settings.temperatureUnit,
@@ -432,7 +436,8 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        networkMonitor.cleanup()
+        NetworkMonitor(this)
+            .cleanup()
     }
 
     private fun proceedWithDefaultLocation() {

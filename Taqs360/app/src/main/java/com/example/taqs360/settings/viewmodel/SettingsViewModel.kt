@@ -78,6 +78,12 @@ class SettingsViewModel(
         }
     }
 
+    fun getLocationMode(): String {
+        val mode = repository.getLocationMode()
+        Log.d(TAG, "Getting location mode: $mode")
+        return mode
+    }
+
     private fun updateSettings() {
         viewModelScope.launch {
             val tempUnit = repository.getTemperatureUnit()
