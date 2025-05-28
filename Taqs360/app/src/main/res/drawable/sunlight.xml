@@ -4,47 +4,9 @@
     android:height="100dp"
     android:viewportWidth="100"
     android:viewportHeight="100">
-    <group>
-        <!-- Central glow with radial gradient -->
-        <path
-            android:pathData="M50,50 m-25,0 a25,25 0 1,0 50,0 a25,25 0 1,0 -50,0"
-            android:fillType="evenOdd">
-            <gradient
-                android:startX="50"
-                android:startY="50"
-                android:endX="50"
-                android:endY="75"
-                android:type="radial"
-                android:gradientRadius="25">
-                <item android:offset="0" android:color="#FFFFFFFF" />
-                <item android:offset="0.7" android:color="#80FFFFCC" />
-                <item android:offset="1" android:color="#00FFFFCC" />
-            </gradient>
-        </path>
-        <!-- Subtle halo -->
-        <path
-            android:pathData="M50,50 m-30,0 a30,30 0 1,0 60,0 a30,30 0 1,0 -60,0"
-            android:fillColor="#20FFFFFF"
-            android:fillType="evenOdd" />
-        <!-- Radial streaks (lens flare effect) -->
-        <path
-            android:fillColor="#80FFFFFF"
-            android:pathData="M50,20 L51,30 L49,30 Z
-                            M50,80 L51,70 L49,70 Z
-                            M20,50 L30,51 L30,49 Z
-                            M80,50 L70,51 L70,49 Z
-                            M30,30 L35,35 L33,37 Z
-                            M70,30 L65,35 L67,37 Z
-                            M30,70 L35,65 L33,63 Z
-                            M70,70 L65,65 L67,63 Z"
-            android:fillAlpha="0.6" />
-        <!-- Secondary flare streaks (longer, fainter) -->
-        <path
-            android:fillColor="#40FFFFFF"
-            android:pathData="M50,10 L51,35 L49,35 Z
-                            M50,90 L51,65 L49,65 Z
-                            M10,50 L35,51 L35,49 Z
-                            M90,50 L65,51 L65,49 Z"
-            android:fillAlpha="0.4" />
-    </group>
+
+    <!-- Transparent 1x1 pixel path -->
+    <path
+        android:fillColor="#00000000"
+        android:pathData="M0,0h1v1h-1z"/>
 </vector>
