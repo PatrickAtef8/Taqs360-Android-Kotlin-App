@@ -113,8 +113,8 @@ dependencies {
 
     // Room Database
     kapt("androidx.room:room-compiler:2.6.1")
-    implementation ("androidx.room:room-ktx:2.6.1")
-    implementation ("androidx.room:room-runtime:2.6.1")
+    implementation("androidx.room:room-ktx:2.6.1")
+    implementation("androidx.room:room-runtime:2.6.1")
 
     // osmdroid for OpenStreetMap
     implementation("org.osmdroid:osmdroid-android:6.1.10")
@@ -123,18 +123,35 @@ dependencies {
     // Fragment for MapFragment
     implementation("androidx.fragment:fragment-ktx:1.6.2")
 
-        implementation ("com.luckycatlabs:SunriseSunsetCalculator:1.2")
+    implementation("com.luckycatlabs:SunriseSunsetCalculator:1.2")
     // WorkManager
-    implementation ("androidx.work:work-runtime-ktx:2.9.0")
-        implementation ("com.google.android.material:material:1.12.0")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("com.google.android.material:material:1.12.0")
 
     implementation("com.github.prolificinteractive:material-calendarview:2.0.0")
     implementation("com.jakewharton.threetenabp:threetenabp:1.4.4")
 
-    implementation ("com.wdullaer:materialdatetimepicker:4.2.3")
-    implementation ("androidx.navigation:navigation-fragment-ktx:2.8.0")
-    implementation ("androidx.navigation:navigation-ui-ktx:2.8.0")
+    implementation("com.wdullaer:materialdatetimepicker:4.2.3")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.8.0")
+    implementation("androidx.navigation:navigation-ui-ktx:2.8.0")
 
-    implementation ("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
 
+
+
+
+//test
+    testImplementation ("androidx.test.ext:junit:1.1.3")
+    testImplementation ("androidx.test.espresso:espresso-core:3.4.0")
+    testImplementation ("org.hamcrest:hamcrest-library:2.2")
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.2")
+    implementation("org.jetbrains.kotlin:kotlin-reflect:2.0.21")
+    testImplementation("androidx.test:runner:1.6.2")
+    testImplementation("androidx.test:core:1.6.1")
+    testImplementation("androidx.test.ext:junit:1.2.1")
+    testImplementation("junit:junit:4.13.2")
+    testImplementation("io.mockk:mockk-android:1.13.17")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.9.0")
+    testImplementation("androidx.arch.core:core-testing:2.2.0")
+    testImplementation("org.hamcrest:hamcrest:2.2")
 }
