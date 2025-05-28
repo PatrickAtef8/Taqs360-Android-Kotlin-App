@@ -12,22 +12,26 @@ import com.example.taqs360.home.model.pojo.WeatherResponse
 import com.example.taqs360.home.model.repository.WeatherRepository
 import com.example.taqs360.home.model.uidata.ForecastUiModel
 import com.example.taqs360.home.model.uidata.WeatherUiData
+import com.example.taqs360.home.util.WeatherUnitConverter
 import com.example.taqs360.home.util.WeatherUtils
 import com.example.taqs360.location.Location
 import com.example.taqs360.location.LocationDataSource
 import com.example.taqs360.location.LocationResult
 import com.example.taqs360.map.model.LocationData
+import com.example.taqs360.network.NetworkMonitor
 import com.example.taqs360.settings.model.repository.SettingsRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 class WeatherViewModel(
     private val repository: WeatherRepository,
     private val locationDataSource: LocationDataSource,
     private val settingsRepository: SettingsRepository,
-    private val context: Context
+    private val context: Context,
+    private val networkMonitor: NetworkMonitor
 ) : ViewModel() {
 
     private val _weatherUiData = MutableLiveData<WeatherUiData>()
@@ -46,31 +50,33 @@ class WeatherViewModel(
     val lastLocation: LiveData<LocationData?> get() = _lastLocation
 
     private var isMapRequestPending = false
+    private var isIntentPending = false
     private val apiKey = BuildConfig.WEATHER_API_KEY
     private val TAG = "WeatherViewModel"
 
+    private var isFetching = false
+
     init {
-        // Restore last location and trigger fetch if needed
         viewModelScope.launch {
             try {
                 Log.d(TAG, "Initializing WeatherViewModel")
-                val savedLocation = settingsRepository.getLastLocation()
-                if (savedLocation != null) {
-                    Log.d(TAG, "Restored last location: lat=${savedLocation.latitude}, lon=${savedLocation.longitude}")
-                    _lastLocation.value = savedLocation
-                    // Trigger fetch to ensure data is loaded
-                    fetchWeatherForLocation(savedLocation.latitude, savedLocation.longitude)
-                } else {
-                    Log.d(TAG, "No saved last location")
-                    // Trigger fetch for both gps and map modes
-                    when (settingsRepository.getLocationMode()) {
-                        "gps" -> {
-                            Log.d(TAG, "Location mode is gps, fetching weather")
-                            requestLocationAndFetchWeather()
-                        }
-                        "map" -> {
-                            Log.d(TAG, "Location mode is map, fetching weather with fallback")
-                            fetchWeather() // Fallback to GPS or Cairo
+                if (!isIntentPending) {
+                    val savedLocation = settingsRepository.getLastLocation()
+                    if (savedLocation != null) {
+                        Log.d(TAG, "Restored last location: lat=${savedLocation.latitude}, lon=${savedLocation.longitude}")
+                        _lastLocation.value = savedLocation
+                        fetchWeatherForLocation(savedLocation.latitude, savedLocation.longitude)
+                    } else {
+                        Log.d(TAG, "No saved last location")
+                        when (settingsRepository.getLocationMode()) {
+                            "gps" -> {
+                                Log.d(TAG, "Location mode is gps, fetching weather")
+                                requestLocationAndFetchWeather()
+                            }
+                            "map" -> {
+                                Log.d(TAG, "Location mode is map, fetching weather with fallback")
+                                fetchWeather()
+                            }
                         }
                     }
                 }
@@ -81,11 +87,23 @@ class WeatherViewModel(
         }
     }
 
+    fun clearLastLocation() {
+        _lastLocation.value = null
+        viewModelScope.launch {
+            settingsRepository.saveLastLocation(LocationData(0.0, 0.0))
+            Log.d(TAG, "Cleared last location")
+        }
+    }
+
+    fun setIntentPending(pending: Boolean) {
+        isIntentPending = pending
+    }
+
     fun requestLocationAndFetchWeather() {
         viewModelScope.launch {
             if (locationDataSource.hasLocationPermissions()) {
                 val persistedLocation = _lastLocation.value
-                if (persistedLocation != null) {
+                if (persistedLocation != null && persistedLocation.latitude != 0.0 && persistedLocation.longitude != 0.0) {
                     Log.d(TAG, "Using persisted location: lat=${persistedLocation.latitude}, lon=${persistedLocation.longitude}")
                     fetchWeatherForLocation(persistedLocation.latitude, persistedLocation.longitude)
                 } else {
@@ -154,24 +172,32 @@ class WeatherViewModel(
     }
 
     fun fetchWeatherForLocation(latitude: Double, longitude: Double) {
+        if (isFetching) {
+            Log.d(TAG, "Fetch already in progress, skipping")
+            return
+        }
         viewModelScope.launch {
             try {
+                isFetching = true
                 Log.d(TAG, "Fetching weather for lat=$latitude, lon=$longitude")
-                // Validate location
                 if (latitude == 0.0 && longitude == 0.0) {
-                    throw Exception("Invalid location coordinates")
+                    Log.w(TAG, "Skipping invalid coordinates")
+                    return@launch
                 }
                 _lastLocation.value = LocationData(latitude, longitude)
                 settingsRepository.saveLastLocation(LocationData(latitude, longitude))
-                val response = withTimeoutOrNull(10000) { // 10s timeout
-                    repository.getFiveDayForecast(latitude, longitude, apiKey)
+                val isOnline = networkMonitor.isConnected.value ?: false
+                val weatherData = withTimeoutOrNull(10000) {
+                    repository.getFiveDayForecast(latitude, longitude, apiKey, isOnline)
                 } ?: throw Exception("Weather fetch timed out")
-                Log.d(TAG, "Received ${response.list.size} forecast points")
-                val uiData = processWeatherData(response)
+                Log.d(TAG, "Received ${weatherData.response.list.size} forecast points with units=${weatherData.units}")
+                val uiData = processWeatherData(weatherData.response, weatherData.units, isFromCache = !isOnline)
                 _weatherUiData.value = uiData
             } catch (e: Exception) {
                 Log.e(TAG, "Weather fetch failed", e)
                 _error.value = "Failed to fetch weather: ${e.message}"
+            } finally {
+                isFetching = false
             }
         }
     }
@@ -222,7 +248,9 @@ class WeatherViewModel(
     }
 
     fun formatWindSpeed(speed: Float): String {
-        return WeatherUtils.formatWindSpeed(speed, getWindSpeedUnit()).let {
+        val windSpeedUnit = getWindSpeedUnit()
+        Log.d(TAG, "Formatting wind speed: speed=$speed, unit=$windSpeedUnit")
+        return WeatherUtils.formatWindSpeed(speed, windSpeedUnit).let {
             if (shouldShowArabicNumerals()) WeatherUtils.toArabicNumerals(it, true) else it
         }
     }
@@ -239,7 +267,7 @@ class WeatherViewModel(
         }
     }
 
-    private fun processWeatherData(response: WeatherResponse): WeatherUiData {
+    private fun processWeatherData(response: WeatherResponse, cachedUnits: String, isFromCache: Boolean): WeatherUiData {
         val timeZoneId = response.city.timezone.let { offset ->
             TimeZone.getAvailableIDs(offset * 1000).firstOrNull() ?: "UTC"
         }
@@ -267,6 +295,11 @@ class WeatherViewModel(
             this.timeZone = timeZone
         }
 
+        val converter = WeatherUnitConverter()
+        val currentTempUnit = getTemperatureUnit()
+        val currentWindUnit = getWindSpeedUnit()
+        Log.d(TAG, "Processing data: cachedUnits=$cachedUnits, currentTempUnit=$currentTempUnit, currentWindUnit=$currentWindUnit")
+
         val groupedForecasts = response.list.groupBy { forecast ->
             val forecastCalendar = Calendar.getInstance(timeZone).apply {
                 timeInMillis = forecast.dt * 1000
@@ -293,14 +326,15 @@ class WeatherViewModel(
                 Math.abs(forecastHour - 12)
             } ?: forecasts.first()
 
+            val convertedTemps = forecasts.map { converter.convertTemperature(it.main.temp, cachedUnits, currentTempUnit) }
             ForecastUiModel(
                 day = when {
                     isToday -> context.getString(R.string.today)
                     isTomorrow -> context.getString(R.string.tomorrow)
                     else -> dayFormat.format(forecastDate)
                 },
-                minTemp = forecasts.minOf { it.main.temp }.toInt(),
-                maxTemp = forecasts.maxOf { it.main.temp }.toInt(),
+                minTemp = convertedTemps.minOrNull()?.roundToInt() ?: 0,
+                maxTemp = convertedTemps.maxOrNull()?.roundToInt() ?: 0,
                 weatherDescription = representative.weather[0].description.replaceFirstChar { it.uppercase() },
                 iconResId = WeatherUtils.getWeatherIconResIdFromCode(representative.weather[0].icon),
                 forecastsForDay = forecasts.sortedBy { it.dt },
@@ -313,18 +347,20 @@ class WeatherViewModel(
 
         return WeatherUiData(
             location = "${response.city.name}, ${response.city.country}",
-            currentTemp = currentForecast.main.temp.toInt(),
-            feelsLike = currentForecast.main.feels_like.toInt(),
+            currentTemp = converter.convertTemperature(currentForecast.main.temp, cachedUnits, currentTempUnit).roundToInt(),
+            feelsLike = converter.convertTemperature(currentForecast.main.feels_like, cachedUnits, currentTempUnit).roundToInt(),
             description = currentForecast.weather[0].description.replaceFirstChar { it.uppercase() },
             humidity = currentForecast.main.humidity,
-            windSpeed = currentForecast.wind.speed,
+            windSpeed = converter.convertWindSpeed(currentForecast.wind.speed, cachedUnits, currentWindUnit),
             visibility = currentForecast.visibility,
             date = displayDateFormat.format(currentCalendar.time),
             currentTime = timeFormat.format(currentCalendar.time),
             currentWeatherIcon = WeatherUtils.getWeatherIconResIdFromCode(currentForecast.weather[0].icon),
             forecasts = forecastUiModels,
             timezoneOffset = response.city.timezone,
-            timezoneId = timeZoneId
+            timezoneId = timeZoneId,
+            isFromCache = isFromCache,
+            cachedUnits = cachedUnits
         )
     }
 }
