@@ -157,7 +157,7 @@ class WeatherViewModel(
                     is LocationResult.Success -> result.data
                     is LocationResult.Failure -> {
                         Log.w(TAG, "Using fallback location: ${result.exception.message}")
-                        Location(30.0444, 31.2357) // Cairo
+                        Location(30.0444, 31.2357) // Cairo just in case (testing)
                     }
                 }
 
@@ -295,11 +295,14 @@ class WeatherViewModel(
             this.timeZone = timeZone
         }
 
+        /*jni conversion*/
         val converter = WeatherUnitConverter()
         val currentTempUnit = getTemperatureUnit()
         val currentWindUnit = getWindSpeedUnit()
         Log.d(TAG, "Processing data: cachedUnits=$cachedUnits, currentTempUnit=$currentTempUnit, currentWindUnit=$currentWindUnit")
 
+
+        /*to be linked to ui data*/
         val groupedForecasts = response.list.groupBy { forecast ->
             val forecastCalendar = Calendar.getInstance(timeZone).apply {
                 timeInMillis = forecast.dt * 1000
@@ -307,6 +310,7 @@ class WeatherViewModel(
             dateFormat.format(forecastCalendar.time)
         }.toSortedMap()
 
+        /*here*/
         val forecastUiModels = groupedForecasts.entries.take(5).mapIndexed { index, (date, forecasts) ->
             val forecastDate = dateFormat.parse(date)!!
             val forecastCalendar = Calendar.getInstance(timeZone).apply {
@@ -329,6 +333,7 @@ class WeatherViewModel(
             val convertedTemps = forecasts.map { converter.convertTemperature(it.main.temp, cachedUnits, currentTempUnit) }
             ForecastUiModel(
                 day = when {
+                    /*just that*/
                     isToday -> context.getString(R.string.today)
                     isTomorrow -> context.getString(R.string.tomorrow)
                     else -> dayFormat.format(forecastDate)
@@ -347,10 +352,12 @@ class WeatherViewModel(
 
         return WeatherUiData(
             location = "${response.city.name}, ${response.city.country}",
+            /*convert temp and save it*/
             currentTemp = converter.convertTemperature(currentForecast.main.temp, cachedUnits, currentTempUnit).roundToInt(),
             feelsLike = converter.convertTemperature(currentForecast.main.feels_like, cachedUnits, currentTempUnit).roundToInt(),
             description = currentForecast.weather[0].description.replaceFirstChar { it.uppercase() },
             humidity = currentForecast.main.humidity,
+            /*convert wind speed and save it to feels like*/
             windSpeed = converter.convertWindSpeed(currentForecast.wind.speed, cachedUnits, currentWindUnit),
             visibility = currentForecast.visibility,
             date = displayDateFormat.format(currentCalendar.time),

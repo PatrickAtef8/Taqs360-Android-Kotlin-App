@@ -160,6 +160,7 @@ class WeatherActivity : AppCompatActivity() {
                 viewModel.requestLocationAndFetchWeather()
             }
         }
+        /*observing the ui data to be viewed*/
 
         viewModel.weatherUiData.observe(this) { weather ->
             binding.progressBar.visibility = View.GONE
