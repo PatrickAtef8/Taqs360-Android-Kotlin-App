@@ -5,6 +5,77 @@
 
 ---
 
+
+
+---
+
+## 📸 Screenshots
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 16-52-28.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 16-54-49.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 16-55-13.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 16-55-26.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 16-55-49.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 16-56-04.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 16-57-23.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-00-39.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-02-42.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-04-49.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-05-11.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-05-25.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-05-34.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-05-41.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-05-46.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-05-56.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-06-14.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-07-06.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-07-17.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-07-30.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-07-35.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-08-17.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-08-21.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-08-34.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-08-37.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-08-58.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-09-09.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-10-03.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-10-15.png" width="30%" />
+  <img src="photos/Screenshot from 2025-09-22 17-11-47.png" width="30%" />
+</p>
+
+<p align="center">
+  <img src="photos/Screenshot from 2025-09-22 17-13-04.png" width="30%" />
+</p>
+
+
 ## 🚀 Features
 
 - 📍 **Location-Based Forecasts**  

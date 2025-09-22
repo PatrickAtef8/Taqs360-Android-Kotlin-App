@@ -74,7 +74,7 @@ class WeatherActivity : AppCompatActivity() {
                     WeatherRemoteDataSourceImpl(
                         RetrofitHelper.getInstance().create(WeatherService::class.java),
                         SettingsRepositoryImpl(
-                            SettingsLocalDataSourceImpl(applicationContext),
+                            SettingsLocalDataSourceImpl(this),
                             SettingsRemoteDataSourceImpl()
                         )
                     ),
@@ -82,10 +82,10 @@ class WeatherActivity : AppCompatActivity() {
                 ),
                 LocationDataSource(this),
                 SettingsRepositoryImpl(
-                    SettingsLocalDataSourceImpl(applicationContext),
+                    SettingsLocalDataSourceImpl(this),
                     SettingsRemoteDataSourceImpl()
                 ),
-                applicationContext,
+                this,
                 NetworkMonitor(this)
 
             )
